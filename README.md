@@ -3,7 +3,7 @@
 
 ## Overview
 
-The Country Trivia App is a simple trivia game API that generates quizzes based on users' IP locations. It provides a fun and interactive way for users to test their knowledge about different countries.
+The Country Trivia App is a simple trivia game API that generates quizzes based on users' IP locations. It provides a fun and interactive way for users to test their knowledge about different countries. Currently hosted live at [Trivia Quiz App](https://bank-app-ef40.onrender.com)
 
 ## Getting Started
 
