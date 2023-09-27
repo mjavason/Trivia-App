@@ -11,7 +11,7 @@ To use the Trivia Quiz Game API:
 1. Clone the repository to your local machine:
 
    ```shell
-   git clone https://github.com/yourusername/trivia-quiz-api.git
+   git clone https://github.com/mjavason/trivia-quiz-api.git
    ```
 
 2. Navigate to the project directory:
