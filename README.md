@@ -116,7 +116,7 @@ You can use this example to illustrate how users can register with the Country T
 
 ## Documentation
 
-For detailed information about using the app's API and endpoints, consult the [Country Trivia App Documentation](#).
+For detailed information about using the app's API and endpoints, consult the [Country Trivia App Documentation](https://documenter.getpostman.com/view/29278179/2s9YJZ2Pep).
 
 ## Contributing
 

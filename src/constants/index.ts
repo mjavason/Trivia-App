@@ -57,7 +57,7 @@ export const MESSAGES = {
 };
 
 export const LINKS = {
-  API_DOCUMENTATION: 'https://documenter.getpostman.com/view/29278179/2s9YJXYPzS',
+  API_DOCUMENTATION: 'https://documenter.getpostman.com/view/29278179/2s9YJZ2Pep',
   EMAIL: 'mailto:app@mail.online',
   GOOGLE_MEET: 'https://meet.google.com',
   PHONE_CALL: 'tel:+2349999999999',
