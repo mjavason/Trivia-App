@@ -21,13 +21,7 @@ To use the Country Trivia App API, follow these steps:
    cd country-trivia-app
    ```
 
-3. Install the required dependencies:
-
-   ```shell
-   npm install
-   ```
-
-4. Configure environment variables by creating a `.env` file in the root directory. Here's a sample `.env` file:
+3. Configure environment variables by creating a `.env` file in the root directory. Here's a sample `.env` file:
 
    ```env
    ACCESS_TOKEN_SECRET=your_access_token_secret
@@ -41,11 +35,27 @@ To use the Country Trivia App API, follow these steps:
    MAIL_PASSWORD=your_mail_password
    ```
 
-5. Start the API server:
+4. Install the required dependencies:
 
    ```shell
-   npm start
+   npm install
    ```
+5. Ensure you have Node.js installed on your computer.
+6. Build the TypeScript code using 
+   ```shell
+   npm run build
+   ```
+7. Start the server locally using one of the following commands:
+
+   - For local development with automatic code reloading (using nodemon):
+     ```bash
+     npm run dev
+     ```
+   - For running the production-ready build:
+     ```bash
+     npm start
+     ```
+
 
 The API will be accessible at `http://localhost:5000` by default. Make sure to replace the environment variables with your actual values.
 
@@ -111,6 +121,7 @@ In this example:
 
 - You provide the user's `firstname`, `lastname`, `email`, and `password` in the request body.
 - The API registers the user and returns a JSON response indicating a successful registration, along with the user's details such as their `_id`, `firstname`, `lastname`, `email`, `role`, and `createdAt` timestamp.
+
 
 ## Documentation
 
