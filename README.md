@@ -114,6 +114,10 @@ In this example:
 
 You can use this example to illustrate how users can register with the Country Trivia App API in your README.
 
+## Documentation
+
+For detailed information about using the app's API and endpoints, consult the [Country Trivia App Documentation](#).
+
 ## Contributing
 
 Contributions to the Country Trivia App are welcome! If you'd like to contribute:
