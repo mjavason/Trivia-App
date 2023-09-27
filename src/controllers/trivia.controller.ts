@@ -1,7 +1,12 @@
 import { Request, Response } from 'express';
 import geoip from 'geoip-lite';
-import { triviaService } from '../services';
-import { SuccessResponse, InternalErrorResponse, NotFoundResponse } from '../helpers/response';
+import { triviaService, userService } from '../services';
+import {
+  SuccessResponse,
+  InternalErrorResponse,
+  NotFoundResponse,
+  SuccessMsgResponse,
+} from '../helpers/response';
 import { MESSAGES } from '../constants';
 import ApiService from '../services/api.service';
 import IIpify from '../interfaces/ipify.interface';
@@ -30,6 +35,11 @@ async function calculateLevenshteinEditDistance(str1: string, str2: string) {
   return dp[m][n];
 }
 
+// Calculate the maximum allowed edit distance based on the length of the correct answer
+function calculateMaxEditDistance(correctAnswerLength: number) {
+  return Math.floor(correctAnswerLength * 0.55);
+}
+
 const ipifyAPI = new ApiService('https://api.ipify.org?format=json');
 
 class Controller {
@@ -42,6 +52,7 @@ class Controller {
   }
 
   async getOne(req: Request, res: Response) {
+    await triviaService.migrate();
     try {
       // Fetch the user's IP from ipify api
       const userIp = await ipifyAPI.get<IIpify>('');
@@ -82,21 +93,39 @@ class Controller {
     if (!data) return NotFoundResponse(res);
 
     const correctAnswer = data.correctAnswer;
-    const maxEditDistance = 5; // You can adjust this threshold as needed
+    const maxEditDistance = calculateMaxEditDistance(correctAnswer.length);
 
     // Calculate the edit distance between the provided answer and the correct answer
     const editDistance = await calculateLevenshteinEditDistance(providedAnswer, correctAnswer);
 
     // If the edit distance is within the threshold, consider the answer correct
     if (editDistance <= maxEditDistance) {
+      const userId = res.locals.user._id; // Replace this with how you identify users
+      const pointsToAdd = 10;
+
+      const user = await userService.findOne({ _id: userId });
+
+      if (!user) return NotFoundResponse(res, 'User not found');
+
+      const updatedUser = await userService.update(
+        { _id: userId },
+        { points: user.points + pointsToAdd },
+      );
+
+      if (!updatedUser) return InternalErrorResponse(res);
+
       return SuccessResponse(
         res,
-        data,
+        updatedUser,
         `Correct! The answer is ${data.correctAnswer} You just earned 10 points to your profile`,
       );
     }
 
-    return SuccessResponse(res, data);
+    return SuccessMsgResponse(
+      res,
+      // data,
+      `Wrong! The answer is ${data.correctAnswer}`,
+    );
   }
 
   async getAll(req: Request, res: Response) {
