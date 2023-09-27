@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import { CORS_ORIGIN } from '../constants';
+import limiter from './rate_limiter.middleware';
 
 function PreMiddleware(app: express.Application) {
   // Middleware to enable CORS
@@ -11,7 +12,7 @@ function PreMiddleware(app: express.Application) {
   app.use(express.urlencoded({ limit: '10mb', extended: true, parameterLimit: 50000 }));
 
   //will return the real IP address even if behind proxy
-  app.set('trust proxy', true)
+  app.set('trust proxy', true);
 
   //CORS RESTRICTED
   // app.use(
@@ -23,6 +24,8 @@ function PreMiddleware(app: express.Application) {
 
   app.use(helmet());
 
+  app.use(limiter);
+  
   return app;
 }
 
