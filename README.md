@@ -12,7 +12,7 @@ To use the Country Trivia App API, follow these steps:
 1. Clone the repository to your local machine:
 
    ```shell
-   git clone https://github.com/mjavason/country-trivia-app.git
+   git clone https://github.com/mjavason/Trivia-Quiz-API.git
    ```
 
 2. Navigate to the project directory:
