@@ -47,7 +47,7 @@ To use the Country Trivia App API, follow these steps:
    npm start
    ```
 
-The API will be accessible at `http://localhost:3000` by default. Make sure to replace the environment variables with your actual values.
+The API will be accessible at `http://localhost:5000` by default. Make sure to replace the environment variables with your actual values.
 
 ## IP Location-Based Quizzes
 
