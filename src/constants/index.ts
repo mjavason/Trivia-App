@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config({ path: './.env' });
 // export const CORS_ORIGIN = process.env.CORS_ORIGIN || 'http://localhost:3000';
 export const CORS_ORIGIN = process.env.CORS_ORIGIN || '*';
-export const DB_NAME = process.env.MONGO_DB_NAME || 'bank-app';
+export const DB_NAME = process.env.MONGO_DB_NAME || 'country-trivia-app';
 export const DB_CONNECTION_STRING =
   process.env.MONGO_DB_URL + DB_NAME || 'mongodb://localhost:27017/' + DB_NAME;
 export const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET || 'access-token-secret';

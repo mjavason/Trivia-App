@@ -1,23 +1,24 @@
-# Trivia Quiz Game API
+
+# Country Trivia App
 
 ## Overview
 
-The Trivia Quiz Game API is a simple project that generates trivia quizzes based on users' IP locations. It's designed to provide a basic and fun quiz experience with location-specific questions.
+The Country Trivia App is a simple trivia game API that generates quizzes based on users' IP locations. It provides a fun and interactive way for users to test their knowledge about different countries.
 
 ## Getting Started
 
-To use the Trivia Quiz Game API:
+To use the Country Trivia App API, follow these steps:
 
 1. Clone the repository to your local machine:
 
    ```shell
-   git clone https://github.com/mjavason/trivia-quiz-api.git
+   git clone https://github.com/mjavason/country-trivia-app.git
    ```
 
 2. Navigate to the project directory:
 
    ```shell
-   cd trivia-quiz-api
+   cd country-trivia-app
    ```
 
 3. Install the required dependencies:
@@ -26,12 +27,18 @@ To use the Trivia Quiz Game API:
    npm install
    ```
 
-4. Configure environment variables in a `.env` file:
+4. Configure environment variables by creating a `.env` file in the root directory. Here's a sample `.env` file:
 
    ```env
-   PORT=3000
-   DATABASE_URL=mongodb://localhost:27017/quizdb
-   GEOLOCATION_API_KEY=your_geolocation_api_key
+   ACCESS_TOKEN_SECRET=your_access_token_secret
+   APP_NAME=CountryTriviaApp
+   JWT_SECRET=your_jwt_secret
+   MONGODB_URL=your_mongodb_uri
+   REFRESH_TOKEN_SECRET=your_refresh_token_secret
+   USERNAME=user@example.com
+   SITE_LINK=your_site_link
+   MAIL_ADDRESS=your_mail_address
+   MAIL_PASSWORD=your_mail_password
    ```
 
 5. Start the API server:
@@ -40,32 +47,89 @@ To use the Trivia Quiz Game API:
    npm start
    ```
 
-The API will be accessible at `http://localhost:5000` by default.
+The API will be accessible at `http://localhost:3000` by default. Make sure to replace the environment variables with your actual values.
 
 ## IP Location-Based Quizzes
 
-The unique feature of this API is its ability to generate quizzes based on the user's IP location. Here's how it works:
+The Country Trivia App's key feature is its ability to generate quizzes based on the user's IP location:
 
-1. **IP Location Detection**: When a user makes a request to the API, it automatically detects their IP location using a geolocation service.
+1. **IP Location Detection**: The API automatically detects the user's IP location using a geolocation service.
 
-2. **Country Identification**: The API determines the user's country or region based on their IP address.
+2. **Country Identification**: It determines the user's country or region based on their IP address.
 
 3. **Quiz Generation**: Using the detected location, the API fetches quiz questions related to that country or region.
 
 4. **Personalized Quiz**: The API assembles a personalized quiz for the user, featuring questions and trivia specific to their location.
 
-## API Documentation
-
-For API usage details, refer to [...](#).
-
 ## Security
 
-This is a demo project and doesn't implement advanced security measures. Do not use it in production without proper security enhancements.
+Please note that this is a demo project and may not implement advanced security measures. If you plan to use it in a production environment, consider enhancing its security features.
+
+## Sample Usage
+
+### User Registration
+
+To register a new user with the Country Trivia App API, you can make a POST request to the `/api/v1/auth/register` endpoint with the following JSON payload:
+
+**Request:**
+
+```http
+POST /api/v1/auth/register
+Content-Type: application/json
+
+{
+  "firstname": "John",
+  "lastname": "Doe",
+  "email": "johndoe@example.com",
+  "password": "secure_password"
+}
+```
+
+**Response:**
+
+A successful registration will yield a JSON response like this:
+
+```json
+{
+  "success": true,
+  "status_code": "10000",
+  "message": "Registration successful",
+  "data": {
+    "_id": "5f8a12a3e055b1246890d4ad",
+    "firstname": "John",
+    "lastname": "Doe",
+    "email": "johndoe@example.com",
+    "role": "user",
+    "deleted": false,
+    "createdAt": "2023-09-25T11:00:00.000Z",
+    "updatedAt": "2023-09-25T11:00:00.000Z"
+  }
+}
+```
+
+In this example:
+
+- You provide the user's `firstname`, `lastname`, `email`, and `password` in the request body.
+- The API registers the user and returns a JSON response indicating a successful registration, along with the user's details such as their `_id`, `firstname`, `lastname`, `email`, `role`, and `createdAt` timestamp.
+
+You can use this example to illustrate how users can register with the Country Trivia App API in your README.
 
 ## Contributing
 
-Contributions are welcome! Feel free to fork and make improvements.
+Contributions to the Country Trivia App are welcome! If you'd like to contribute:
+
+1. Fork the project on GitHub.
+
+2. Create a new branch for your changes.
+
+3. Make your improvements or additions.
+
+4. Thoroughly test your changes.
+
+5. Create a pull request with a clear description of your changes.
+
+Contributions that enhance security, performance, and user experience are particularly valuable.
 
 ## Acknowledgments
 
-Thanks to the community for supporting this demo project.
+The Country Trivia App project has benefited from the collaboration and support of colleagues, mentors, and friends. Their contributions in coding, design, testing, data management, and advice have been invaluable. Thank you to all who have been a part of this project.
