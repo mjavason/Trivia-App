@@ -1,5 +1,4 @@
-import Model from '../database/models/transaction.model';
-import Interface from '../interfaces/transaction.interface';
+import Model from '../database/models/trivia.model';
 
 class Service {
   async create(body: object) {
@@ -42,6 +41,15 @@ class Service {
     return await Model.findOneAndDelete(searchParams).select('-__v');
   }
 
+  async findOneRandom(searchData: object) {
+    const documents = await Model.find({ ...searchData, deleted: false }).select('-__v');
+    if (documents) {
+      const randomIndex = Math.floor(Math.random() * documents.length);
+      return documents[randomIndex];
+    }
+
+    return null;
+  }
 }
 
-export const transactionService = new Service();
+export const triviaService = new Service();

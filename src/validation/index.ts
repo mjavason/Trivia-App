@@ -4,4 +4,4 @@
 // export { whatever } from './whatever';
 
 export { authValidation } from './auth.validation';
-export { bankValidation } from './bank.validation';
+export { triviaValidation } from './trivia.validation';

@@ -69,6 +69,6 @@ export const LINKS = {
 
 export const DATABASES = {
   USER: 'user',
-  QUESTION: 'question',
+  TRIVIA: 'trivia',
   RESET_TOKEN: 'reset_token',
 };
