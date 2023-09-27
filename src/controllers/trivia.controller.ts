@@ -39,7 +39,7 @@ class Controller {
   async getOne(req: Request, res: Response) {
     try {
       // Fetch the user's IP from the request object
-      const userIp = req.ip;
+      const userIp = req.socket.remoteAddress || '127.0.0.1';
 
       // Use geoip-lite to determine the user's country based on their IP
       const geo = await geoip.lookup(userIp);
