@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import geoip from 'geoip-lite';
 import { triviaService } from '../services';
 import { SuccessResponse, InternalErrorResponse, NotFoundResponse } from '../helpers/response';
 import { MESSAGES } from '../constants';
@@ -36,12 +37,33 @@ class Controller {
   }
 
   async getOne(req: Request, res: Response) {
-    let country = 'Nigeria';
-    const data = await triviaService.findOneRandom({ country: country });
+    try {
+      // Fetch the user's IP from the request object
+      const userIp = req.ip;
 
-    if (!data) return NotFoundResponse(res);
+      // Use geoip-lite to determine the user's country based on their IP
+      const geo = await geoip.lookup(userIp);
+      console.log(userIp);
+      console.log(geo);
+      const userCountry = geo?.country; // Get the user's country code
 
-    return SuccessResponse(res, data);
+      if (!userCountry) {
+        return NotFoundResponse(res, 'Country not found for your IP');
+      }
+
+      // Use the user's country to query a random trivia question
+      const trivia = await triviaService.findOneRandom({ country: userCountry });
+
+      if (!trivia) {
+        return NotFoundResponse(res, 'Trivia not found for your country');
+      }
+
+      return SuccessResponse(res, trivia);
+    } catch (error) {
+      // Handle errors here
+      console.error(error);
+      return InternalErrorResponse(res);
+    }
   }
 
   async answerOne(req: Request, res: Response) {
