@@ -10,6 +10,9 @@ function PreMiddleware(app: express.Application) {
   app.use(express.json({ limit: '10mb' }));
   app.use(express.urlencoded({ limit: '10mb', extended: true, parameterLimit: 50000 }));
 
+  //will return the real IP address even if behind proxy
+  app.set('trust proxy', true)
+
   //CORS RESTRICTED
   // app.use(
   //   cors({
