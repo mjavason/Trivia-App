@@ -100,7 +100,7 @@ A successful registration will yield a JSON response like this:
     "lastname": "Doe",
     "email": "johndoe@example.com",
     "role": "user",
-    "deleted": false,
+    "points": 0,
     "createdAt": "2023-09-25T11:00:00.000Z",
     "updatedAt": "2023-09-25T11:00:00.000Z"
   }
