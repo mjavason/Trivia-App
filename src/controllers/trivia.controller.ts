@@ -5,6 +5,7 @@ import { SuccessResponse, InternalErrorResponse, NotFoundResponse } from '../hel
 import { MESSAGES } from '../constants';
 import ApiService from '../services/api.service';
 import IIpify from '../interfaces/ipify.interface';
+import logger from '../helpers/logger';
 
 async function calculateLevenshteinEditDistance(str1: string, str2: string) {
   const m: number = str1.length;
@@ -42,7 +43,7 @@ class Controller {
 
   async getOne(req: Request, res: Response) {
     try {
-      // Fetch the user's IP from the request object
+      // Fetch the user's IP from ipify api
       const userIp = await ipifyAPI.get<IIpify>('');
 
       if (!userIp) return InternalErrorResponse(res, 'Unable to fetch user IP from Ipify');
@@ -52,7 +53,7 @@ class Controller {
       // Use geoip-lite to determine the user's country based on their IP
       const geo = await geoip.lookup(userIp.ip);
 
-      // console.log(geo);
+      logger.info(geo);
 
       if (!geo || !geo.country) {
         return NotFoundResponse(res, 'Country not found for your IP');
