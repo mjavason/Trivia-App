@@ -112,8 +112,6 @@ In this example:
 - You provide the user's `firstname`, `lastname`, `email`, and `password` in the request body.
 - The API registers the user and returns a JSON response indicating a successful registration, along with the user's details such as their `_id`, `firstname`, `lastname`, `email`, `role`, and `createdAt` timestamp.
 
-You can use this example to illustrate how users can register with the Country Trivia App API in your README.
-
 ## Documentation
 
 For detailed information about using the app's API and endpoints, consult the [Country Trivia App Documentation](https://documenter.getpostman.com/view/29278179/2s9YJZ2Pep).
