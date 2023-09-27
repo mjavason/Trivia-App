@@ -3,6 +3,8 @@ import geoip from 'geoip-lite';
 import { triviaService } from '../services';
 import { SuccessResponse, InternalErrorResponse, NotFoundResponse } from '../helpers/response';
 import { MESSAGES } from '../constants';
+import ApiService from '../services/api.service';
+import IIpify from '../interfaces/ipify.interface';
 
 async function calculateLevenshteinEditDistance(str1: string, str2: string) {
   const m: number = str1.length;
@@ -27,6 +29,8 @@ async function calculateLevenshteinEditDistance(str1: string, str2: string) {
   return dp[m][n];
 }
 
+const ipifyAPI = new ApiService('https://api.ipify.org?format=json');
+
 class Controller {
   async create(req: Request, res: Response) {
     const data = await triviaService.create(req.body);
@@ -39,20 +43,23 @@ class Controller {
   async getOne(req: Request, res: Response) {
     try {
       // Fetch the user's IP from the request object
-      const userIp = req.ip;
+      const userIp = await ipifyAPI.get<IIpify>('');
+
+      if (!userIp) return InternalErrorResponse(res, 'Unable to fetch user IP from Ipify');
+
+      // console.log(userIp.ip);
 
       // Use geoip-lite to determine the user's country based on their IP
-      const geo = await geoip.lookup(userIp);
-      console.log(userIp);
-      console.log(geo);
-      const userCountry = geo?.country; // Get the user's country code
+      const geo = await geoip.lookup(userIp.ip);
 
-      if (!userCountry) {
+      // console.log(geo);
+
+      if (!geo || !geo.country) {
         return NotFoundResponse(res, 'Country not found for your IP');
       }
 
       // Use the user's country to query a random trivia question
-      const trivia = await triviaService.findOneRandom({ country: userCountry });
+      const trivia = await triviaService.findOneRandom({ country: geo.country });
 
       if (!trivia) {
         return NotFoundResponse(res, 'Trivia not found for your country');
