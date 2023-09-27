@@ -8,7 +8,7 @@ class Validation {
       id: z.string().refine((value) => Types.ObjectId.isValid(value), {
         message: 'Invalid ObjectId format',
       }),
-      answer: z.string().min(1).max(255),
+      answer: z.string().min(3).max(255),
     }),
   };
 }

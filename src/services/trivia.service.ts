@@ -42,13 +42,42 @@ class Service {
   }
 
   async findOneRandom(searchData: object) {
-    const documents = await Model.find({ ...searchData, deleted: false }).select('-__v');
-    if (documents) {
-      const randomIndex = Math.floor(Math.random() * documents.length);
-      return documents[randomIndex];
-    }
+    const randomDocument = await Model.aggregate([
+      { $match: { ...searchData, deleted: false } },
+      { $sample: { size: 1 } },
+    ]);
 
-    return null;
+    return randomDocument.length > 0 ? randomDocument[0] : null;
+  }
+
+  // Define your migration logic
+  async migrate() {
+    try {
+      // Find all documents that don't have the "deleted" field
+      const documentsToUpdate = await Model.find();
+
+      // Create an object to keep track of the unique 'text' values
+      const uniqueTexts: Record<string, boolean> = {};
+
+      // Delete duplicate documents based on the 'text' field
+      for (const document of documentsToUpdate) {
+        if (uniqueTexts[document.text]) {
+          // If a document with the same 'text' already exists, delete it
+          await Model.deleteOne({ _id: document._id });
+          console.log(`Document deleted (duplicate text): ${document.text}`);
+        } else {
+          // Mark the 'text' as seen
+          uniqueTexts[document.text] = true;
+          console.log('Document migrated');
+        }
+      }
+
+      console.log(`Updated ${documentsToUpdate.length} documents.`);
+    } catch (error) {
+      console.error('Migration error:', error);
+    } finally {
+      console.log('Migration completed successfully');
+    }
   }
 }
 
