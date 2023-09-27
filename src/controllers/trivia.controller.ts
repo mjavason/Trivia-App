@@ -52,7 +52,6 @@ class Controller {
   }
 
   async getOne(req: Request, res: Response) {
-    await triviaService.migrate();
     try {
       // Fetch the user's IP from ipify api
       const userIp = await ipifyAPI.get<IIpify>('');
@@ -90,7 +89,7 @@ class Controller {
     const providedAnswer = req.body.answer;
     const data = await triviaService.findOne({ _id: triviaId });
 
-    if (!data) return NotFoundResponse(res);
+    if (!data) return NotFoundResponse(res, 'Question not found');
 
     const correctAnswer = data.correctAnswer;
     const maxEditDistance = calculateMaxEditDistance(correctAnswer.length);
